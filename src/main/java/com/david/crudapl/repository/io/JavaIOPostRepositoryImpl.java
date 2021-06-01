@@ -5,6 +5,9 @@ import com.david.crudapl.repository.PostRepository;
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,34 +17,11 @@ public class JavaIOPostRepositoryImpl implements PostRepository {
 
     @Override
     public List<Post> getAll() {
-        List<Post> list = new ArrayList<>();
-        List<String> strings = new ArrayList<>();
         try {
-            File file = new File(POST_FILE_PATH);
-            Gson gson = new Gson();
-            //создаем объект FileReader для объекта File
-            FileReader fr = new FileReader(file);
-            //создаем BufferedReader с существующего FileReader для построчного считывания
-            BufferedReader reader = new BufferedReader(fr);
-            // считаем сначала первую строку
-            String line = reader.readLine();
-            while (line != null) {
-                strings.add(line);
-                //System.out.println(line);
-                line = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Files.lines(Paths.get(POST_FILE_PATH), StandardCharsets.UTF_8).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        for(int i = 0; i < strings.size(); i++) {
-            //list.add(new Post(strings.get(i).split()))
-        }
-
-        //System.out.println(strings);
-
         return null;
     }
 
